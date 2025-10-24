@@ -1,0 +1,53 @@
+services:
+  pymera-debian-test:
+    image: python:3.11-slim
+    volumes:
+      - ./pymera.nim:/app/pymera.nim:ro
+    working_dir: /app
+    command: python3 pymera.nim
+    environment:
+      - PYTHONUNBUFFERED=1
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - GH_TOKEN=${GH_TOKEN:-}
+
+  pymera-alpine-test:
+    image: python:3.11-alpine
+    volumes:
+      - ./pymera.nim:/app/pymera.nim:ro
+    working_dir: /app
+    command: python3 pymera.nim
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  pymera-ruff-test:
+    image: python:3.11-alpine
+    volumes:
+      - ./pymera.nim:/app/pymera.nim:ro
+    working_dir: /app
+    command: sh -c "pip install --quiet ruff && ruff check pymera.nim && ruff format --diff --check pymera.nim && echo '✅ Ruff check and format passed - code is clean'"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  shymera-debian-test:
+    image: debian:bookworm-slim
+    volumes:
+      - ./shymera.nim:/app/shymera.nim:ro
+    working_dir: /app
+    command: sh shymera.nim
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - GH_TOKEN=${GH_TOKEN:-}
+
+  shymera-alpine-test:
+    image: alpine:latest
+    volumes:
+      - ./shymera.nim:/app/shymera.nim:ro
+    working_dir: /app
+    command: sh shymera.nim
+
+  shymera-shellcheck-shfmt-test:
+    image: alpine:latest
+    volumes:
+      - ./shymera.nim:/app/shymera.nim:ro
+    working_dir: /app
+    command: sh -c "apk add --quiet shellcheck shfmt && shellcheck shymera.nim && shfmt -d shymera.nim && echo '✅ shellcheck and shfmt passed - code is clean'"
