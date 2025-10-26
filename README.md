@@ -1,6 +1,6 @@
 # 🐍💀👑 The Pymera
 
-*A cursed chimeric ouroboros of Python and Nim stitched together with syntax hacks — an unholy program that shouldn't exist but does.*
+*A cursed chimera of Python and Nim stitched together with syntax hacks — an unholy program that shouldn't exist but does.*
 
 ## The Forbidden Question
 
@@ -26,123 +26,131 @@ nim c -r pymera.nim
 
 The trick is exploiting comment syntax differences. A single-line comment `#[` in Python is the start of a block-comment in Nim.
 
-The file has 14 numbered components that create the dual-language structure, outlined below.
+The file has 13 numbered components that create the dual-language structure, outlined below.
 
-### Components 1-6: The 😈 Unholy Python Block
+### Components 1-5: The 😈 Unholy Python Block
 
 ```python
 #!/usr/bin/env python3
-
-# 1. Strategic use of `fmt: off/on` protects dual-language syntax from some formatters
-# fmt: off
-
-# 2. Nim: 🚫 forbidden block comment begin
-#[
-
-# 3. Python: 😈 unholy main block begin
-# fmt: on
-
-... Python code that detects/installs Nim goes here ...
-
-# 4. Python: 😈 unholy main block end
-
-# fmt: off
-
-# 5. Python: 🤮 abhorrent list begin
-[
-
-# 6. Nim: 🚫 forbidden block comment end, Python: 🤮 abhorrent list end
-]#
+#[ 1. Nim: 🚫 forbidden block comment begin
+# 2. Python: 😈 unholy main block begin
+# ... Python code ...
+# 3. Python: 😈 unholy main block end
+[# 4. Python: 🤮 abhorrent list begin
+]# # 5. Nim: 🚫 forbidden block comment end, Python: 🤮 abhorrent list end
 ```
 
 **What Nim sees:**
-- **2:** `#[` → Start of a **🚫 forbidden block comment**
-- **3-5:** Everything until the matching `]#` → Commented out (all Python code)
-- **6:** `]#` → End of forbidden block comment
+- **1:** `#[` → Start of a **🚫 forbidden block comment**
+- **2-4:** Everything until the matching `]#` → Commented out (all Python code)
+- **5:** `]#` → End of forbidden block comment
 
 **What Python sees:**
-- **1:** `fmt: off` protects the dual-language syntax boundaries
-- **2:** `#[` → Just a line comment ending with `[`
-- **3-4:** The executable Python code (with `fmt: on` for safe formatting)
-  - Checks if Nim is installed
-  - If not, detects package manager (brew/apt/apk) and auto-installs Nim + build tools
-  - Re-executes itself with Nim compiler
-- Then `fmt: off` again protects the syntax below
-- **5:** `[` → Start of an empty list literal
-- **6:** `]#` → End of list, followed by `#` comment
+- **1:** `#[` → Just a line comment ending with `[`
+- **2-3:** The executable Python code
+- **4:** `[` → Start of an empty list literal
+- **5:** `]#` → End of list, followed by `#` comment
 
-### Components 7-9: The 🔥 Blasphemous Transition
+### Components 6-8: The 🔥 Blasphemous Transition
 
 ```python
-# 7. Nim: 🔥 blasphemous block comment begin
-#[
-
-# 8. Python: ⚠️ heretical multi-line string begin
-"""
-
-# 9. Nim: 🔥 blasphemous block comment end
-]#
+#[ 6. Nim: 🔥 blasphemous block comment begin
+""" 7. Python: ⚠️ heretical multi-line string begin
+]# # 8. Nim: 🔥 blasphemous block comment end
 ```
 
 **What Nim sees:**
-- **7:** `#[` → Start of another **🔥 blasphemous block comment**
-- **8:** The `"""` is inside the comment, so it's ignored
-- **9:** `]#` → End of blasphemous block comment
+- **6:** `#[` → Start of another **🔥 blasphemous block comment**
+- **7:** The `"""` is inside the comment, so it's ignored
+- **8:** `]#` → End of blasphemous block comment
 
 **What Python sees:**
-- **7:** `#[` → Just a comment
-- **8:** `"""` → Start of a **⚠️ heretical multi-line string literal**
-- **9:** `]#` → Still inside the multi-line string
+- **6:** `#[` → Just a comment
+- **7:** `"""` → Start of a **⚠️ heretical multi-line string literal**
+- **8:** `]#` → Still inside the multi-line string
 
-### Components 10-11: The ✨ Glorious Nim Block
+### Components 9-10: The ✨ Glorious Nim Block
 
 ```nim
-# 10. Nim: ✨ glorious main block begin
-
-import strutils, os
-
-echo "🎯 Now running in Nim!"
-echo "✓ Successfully bootstrapped from Python to Nim"
-
-... Fibonacci demo code goes here ...
-
-# 11. Nim: ✨ glorious main block end
+# 9. Nim: ✨ glorious main block begin
+... Nim code ...
+# 10. Nim: ✨ glorious main block end
 ```
 
 **What Nim sees:**
-- **10-11:** ✨ Executable Nim code. Imports, echo statements, a Fibonacci function.
+- **9-10:** ✨ Executable Nim code. Imports, echo statements, a Fibonacci function.
 
 **What Python sees:**
-- **10-11:** Still inside the multi-line string from 8, so this is ignored string data
+- **9-10:** Still inside the multi-line string from 7, so this is ignored string data
 
-### Components 12-14: The 💀 Cursed Closing
+### Components 11-13: The 💀 Cursed Closing
 
 ```python
-# 12. Nim: 💀 cursed block comment begin
-#[
-
-# 13. Python: ⚠️ heretical multi-line string end + 🤢 wretched zero-index begin
-"""[0
-
-# 14. Nim: 💀 cursed block comment end, Python: 🤢 wretched zero-index end
-]#
+#[ # 11. Nim: 💀 cursed block comment begin
+"""[0 # 12. Python: ⚠️ heretical multi-line string end + 🤢 wretched zero-index begin
+]# # 13. Nim: 💀 cursed block comment end, Python: 🤢 wretched zero-index end
 ```
 
 **What Nim sees:**
-- **12:** `#[` → Start of another **💀 cursed block comment**
-- **13:** The `"""[0` is inside the comment, so it's ignored
-- **14:** `]#` → End of cursed block comment
+- **11:** `#[` → Start of another **💀 cursed block comment**
+- **12:** The `"""[0` is inside the comment, so it's ignored
+- **13:** `]#` → End of cursed block comment
 
 **What Python sees:**
-- **12:** `#[` → Just a comment
-- **13:** `"""` → End of the ⚠️ heretical multi-line string, `[0` → 🤢 Wretched zero-index into the string (returns first character)
-- **14:** `]#` → End of indexing, followed by comment
+- **11:** `#[` → Just a comment
+- **12:** `"""` → End of the ⚠️ heretical multi-line string, `[0` → 🤢 Wretched zero-index into the string (returns first character)
+- **13:** `]#` → End of indexing, followed by comment
 
 The `"""[0]#` is a complete Python expression (indexing a string literal), but since it's not assigned or used, it's just ignored.
 
 ## Formatter Compatibility
 
-The Python code passes **Ruff** linting and formatting validation. However, **Black** is incompatible because it inserts a space after `#` in comments, turning `#[` into `# [`, which breaks the Nim block comment syntax.
+### Python Formatters
+
+The Python code passes **Ruff** linting and formatting validation.
+
+**Black** compatibility requires excluding dual-language files. Black's parser cannot handle the file because the dual-language syntax creates unparseable Python. The `# fmt: off` and `# fmt: skip` directives do not prevent Black from reformatting comment lines.
+
+**Solution:** Exclude `pymera.nim` and `shymera.nim` from Black formatting using `--extend-exclude`:
+
+```bash
+black --extend-exclude='pymera\.nim|shymera\.nim' .
+```
+
+Or in `pyproject.toml`:
+
+```toml
+[tool.black]
+extend-exclude = '''
+/(
+  # Dual-language files that Black cannot format correctly
+  | pymera\.nim
+  | shymera\.nim
+)/
+'''
+```
+
+**Note:** When running Black on the entire directory (`.`), it will respect the exclusion. However, explicitly passing the file as an argument (e.g., `black pymera.nim`) will ignore exclusion patterns.
+
+The dual-language syntax blocks are marked with `# fmt: off` and `# fmt: on` to document the intent, though they are not sufficient to prevent Black from attempting to reformat.
+
+### Nim Formatters
+
+**nph** (an opinionated Nim formatter) cannot format dual-language files correctly. While nph provides `#!fmt: off` and `#!fmt: on` directives to disable formatting, these directives do not protect Nim comment syntax tokens like `]#`.
+
+**Issue:** nph splits lines like `]# # comment` into separate lines:
+```nim
+]# # 5. Nim: comment
+# becomes:
+]#
+# 5. Nim: comment
+```
+
+This breaks the dual-language syntax where Python expects `]#` on the same line as the comment to form `]# #`.
+
+**Solution:** Exclude `pymera.nim` and `shymera.nim` from nph formatting in your configuration or CI/CD pipelines.
+
+The dual-language syntax blocks are marked with `#!fmt: off` and `#!fmt: on` to document the intent and protect the Python code sections from Nim formatting. However, the Nim code sections (between the dual-language markers) can be safely formatted with nph if needed, though the file should generally be excluded to preserve the overall structure.
 
 ## Beyond Python: POSIX Shell
 

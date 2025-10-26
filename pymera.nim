@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-# 1. Strategic use of `fmt: off/on` protects dual-language syntax from some formatters
 # fmt: off
-
-# 2. Nim: 🚫 forbidden block comment begin
-#[
-
-# 3. Python: 😈 unholy main block begin
+#[ 1. Nim: 🚫 forbidden block comment begin
+# 2. Python: 😈 unholy main block begin
 # fmt: on
+
+#!fmt: off
 
 import sys
 import subprocess
@@ -145,27 +143,19 @@ result = subprocess.run(
 )
 sys.exit(result.returncode)
 
-# 4. Python: 😈 unholy main block end
+#!fmt: on
 
+# 3. Python: 😈 unholy main block end
 # fmt: off
-
-# 5. Python: 🤮 abhorrent list begin
-[
-
-# 6. Nim: 🚫 forbidden block comment end, Python: 🤮 abhorrent list end
-]#
-
-
-# 7. Nim: 🔥 blasphemous block comment begin
-#[
-
-# 8. Python: ⚠️ heretical multi-line string begin
-"""
-
-# 9. Nim: 🔥 blasphemous block comment end
-]#
-
-# 10. Nim: ✨ glorious main block begin
+#!fmt: off
+[# 4. Python: 🤮 abhorrent list begin
+]# # 5. Nim: 🚫 forbidden block comment end, Python: 🤮 abhorrent list end
+#[ 6. Nim: 🔥 blasphemous block comment begin
+""" 7. Python: ⚠️ heretical multi-line string begin
+]# # 8. Nim: 🔥 blasphemous block comment end
+#!fmt: on
+# fmt: on
+# 9. Nim: ✨ glorious main block begin
 
 import strutils, os
 
@@ -184,13 +174,10 @@ echo "Demo - First 10 Fibonacci numbers:"
 for i in 0..9:
   echo "  F(", i, ") = ", fibonacci(i)
 
-# 11. Nim: ✨ glorious main block end
-
-# 12. Nim: 💀 cursed block comment begin
-#[
-
-# 13. Python: ⚠️ heretical multi-line string end + 🤢 wretched zero-index begin
-"""[0
-
-# 14. Nim: 💀 cursed block comment end, Python: 🤢 wretched zero-index end
-]#
+# 10. Nim: ✨ glorious main block end
+#!fmt: off
+#[ # 11. Nim: 💀 cursed block comment begin
+"""[0 # 12. Python: ⚠️ heretical multi-line string end + 🤢 wretched zero-index begin
+]# # 13. Nim: 💀 cursed block comment end, Python: 🤢 wretched zero-index end
+#!fmt: on
+# fmt: on
