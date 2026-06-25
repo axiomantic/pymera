@@ -107,50 +107,15 @@ The `"""[0]#` is a complete Python expression (indexing a string literal), but s
 
 ### Python Formatters
 
-The Python code passes **Ruff** linting and formatting validation.
+The Python code passes **ruff** and **black** linting and formatting validation (for black, after commit [https://github.com/psf/black/commit/b895a73fd4997657a80f2f3f2785c5d496739f6e](b895a73)).
 
-**Black** compatibility requires excluding dual-language files. Black's parser cannot handle the file because the dual-language syntax creates unparseable Python. The `# fmt: off` and `# fmt: skip` directives do not prevent Black from reformatting comment lines.
-
-**Solution:** Exclude `pymera.nim` and `shymera.nim` from Black formatting using `--extend-exclude`:
-
-```bash
-black --extend-exclude='pymera\.nim|shymera\.nim' .
-```
-
-Or in `pyproject.toml`:
-
-```toml
-[tool.black]
-extend-exclude = '''
-/(
-  # Dual-language files that Black cannot format correctly
-  | pymera\.nim
-  | shymera\.nim
-)/
-'''
-```
-
-**Note:** When running Black on the entire directory (`.`), it will respect the exclusion. However, explicitly passing the file as an argument (e.g., `black pymera.nim`) will ignore exclusion patterns.
-
-The dual-language syntax blocks are marked with `# fmt: off` and `# fmt: on` to document the intent, though they are not sufficient to prevent Black from attempting to reformat.
+The dual-language syntax blocks are marked with `# fmt: off` and `# fmt: on` to prevent reformatting that would break the syntax hacks.
 
 ### Nim Formatters
 
-**nph** (an opinionated Nim formatter) cannot format dual-language files correctly. While nph provides `#!fmt: off` and `#!fmt: on` directives to disable formatting, these directives do not protect Nim comment syntax tokens like `]#`.
+The Nim code passes **nph** formatting and validation after commit ().
 
-**Issue:** nph splits lines like `]# # comment` into separate lines:
-```nim
-]# # 5. Nim: comment
-# becomes:
-]#
-# 5. Nim: comment
-```
-
-This breaks the dual-language syntax where Python expects `]#` on the same line as the comment to form `]# #`.
-
-**Solution:** Exclude `pymera.nim` and `shymera.nim` from nph formatting in your configuration or CI/CD pipelines.
-
-The dual-language syntax blocks are marked with `#!fmt: off` and `#!fmt: on` to document the intent and protect the Python code sections from Nim formatting. However, the Nim code sections (between the dual-language markers) can be safely formatted with nph if needed, though the file should generally be excluded to preserve the overall structure.
+The dual-language syntax blocks are marked with `#!fmt: off` and `#!fmt: on` to prevent reformatting that would break the syntax hacks.
 
 ## Beyond Python: POSIX Shell
 

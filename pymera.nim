@@ -144,7 +144,6 @@ result = subprocess.run(
 sys.exit(result.returncode)
 
 #!fmt: on
-
 # 3. Python: 😈 unholy main block end
 # fmt: off
 #!fmt: off
@@ -167,11 +166,12 @@ echo "Nim version: ", NimVersion
 echo ""
 
 proc fibonacci(n: int): int =
-  if n <= 1: return n
+  if n <= 1:
+    return n
   return fibonacci(n - 1) + fibonacci(n - 2)
 
 echo "Demo - First 10 Fibonacci numbers:"
-for i in 0..9:
+for i in 0 .. 9:
   echo "  F(", i, ") = ", fibonacci(i)
 
 # 10. Nim: ✨ glorious main block end

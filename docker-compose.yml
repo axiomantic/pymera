@@ -28,13 +28,12 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
 
-  # Fails because of https://github.com/psf/black/issues/1245
   pymera-black-test:
     image: python:3.11-alpine
     volumes:
       - .:/app:ro
     working_dir: /app
-    command: sh -c "pip install --quiet black && black --check --diff --extend-exclude='pymera\.nim|shymera\.nim' . && echo '✅ Black format check passed - dual-language files excluded'"
+    command: sh -c "pip install --quiet git+https://github.com/psf/black@b895a73 && black --check --diff . && echo '✅ Black format check passed'"
     environment:
       - PYTHONUNBUFFERED=1
 
